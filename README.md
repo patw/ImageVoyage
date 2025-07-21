@@ -29,7 +29,13 @@ git clone https://github.com/patw/ImageVoyage.git
 cd ImageVoyage
 ```
 
-2. Install dependencies with uv:
+2. Create and activate a virtual environment (recommended):
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+```
+
+3. Install dependencies with uv:
 ```bash
 uv pip install -r requirements.txt
 ```
