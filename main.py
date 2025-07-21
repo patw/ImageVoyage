@@ -8,7 +8,7 @@ import requests
 
 app = FastAPI(
     title="VoyageAI Image Vectorizer",
-    description="Create dense vectors for images using VoyageAI's multimodal embedding model",
+    description="Create dense vectors for images using VoyageAI's multimodal embedding model:  https://docs.voyageai.com/docs/multimodal-embeddings",
     version="1.0",
     contact={
         "name": "Pat Wendorf",
