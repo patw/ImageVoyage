@@ -19,7 +19,7 @@ ImageVoyage is a FastAPI service that generates dense vector embeddings for imag
 ### Prerequisites
 
 - Python 3.8+
-- [Poetry](https://python-poetry.org/) (recommended for dependency management)
+- [uv](https://github.com/astral-sh/uv) (modern Python package installer)
 
 ### Installation
 
