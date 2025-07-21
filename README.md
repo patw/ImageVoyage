@@ -6,10 +6,14 @@ ImageVoyage is a FastAPI service that generates dense vector embeddings for imag
 
 ## Features
 
-- Generate vector embeddings for images from:
-  - File uploads
-  - Public URLs
-- Calculate similarity between two images using:
+- Generate vector embeddings for:
+  - Images from file uploads
+  - Images from public URLs
+  - Text strings
+- Calculate similarity between:
+  - Two images
+  - Image and text
+  Using:
   - Euclidean distance
   - Dot product
   - Cosine similarity
@@ -58,8 +62,11 @@ The API documentation will be available at: http://localhost:8000/docs
 
 - `POST /upload_image_vector` - Generate embedding from uploaded image file
 - `POST /url_image_vector` - Generate embedding from image URL
+- `POST /text_vector` - Generate embedding from text string
 - `POST /upload_image_image_similarity` - Compare two uploaded images
 - `POST /url_image_image_similarity` - Compare two images from URLs
+- `POST /upload_image_text_similarity` - Compare uploaded image with text
+- `POST /url_image_text_similarity` - Compare URL image with text
 
 ## Example Usage
 
@@ -80,6 +87,23 @@ response = requests.post(
         "image_url1": "https://example.com/image1.jpg",
         "image_url2": "https://example.com/image2.jpg"
     }
+)
+print(response.json())
+
+# Compare image with text
+response = requests.post(
+    "http://localhost:8000/url_image_text_similarity",
+    json={
+        "image_url": "https://example.com/image.jpg",
+        "text": "a sunset over the ocean"
+    }
+)
+print(response.json())
+
+# Get text embedding
+response = requests.post(
+    "http://localhost:8000/text_vector",
+    json={"text": "a beautiful landscape"}
 )
 print(response.json())
 ```
