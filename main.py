@@ -79,3 +79,18 @@ async def url_image_image_similarity(image_url1: str, image_url2: str):
     v1 = get_voyage_image_embedding(i1)
     v2 = get_voyage_image_embedding(i2)
     return similarity(v1, v2)
+
+@app.post("/upload_image_text_similarity")
+async def upload_image_text_similarity(image: UploadFile, text: str):
+    img = Image.open(image.file)
+    v1 = get_voyage_image_embedding(img)
+    v2 = get_voyage_text_embedding(text)
+    return similarity(v1, v2)
+
+@app.post("/url_image_text_similarity")
+async def url_image_text_similarity(image_url: str, text: str):
+    response = requests.get(image_url)
+    img = Image.open(BytesIO(response.content))
+    v1 = get_voyage_image_embedding(img)
+    v2 = get_voyage_text_embedding(text)
+    return similarity(v1, v2)
