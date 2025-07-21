@@ -29,9 +29,9 @@ git clone https://github.com/patw/ImageVoyage.git
 cd ImageVoyage
 ```
 
-2. Install dependencies:
+2. Install dependencies with uv:
 ```bash
-poetry install
+uv pip install -r requirements.txt
 ```
 
 3. Set your VoyageAI API key as an environment variable:
@@ -43,7 +43,7 @@ export VOYAGE_API_KEY="your-api-key-here"
 
 Start the FastAPI server:
 ```bash
-poetry run uvicorn main:app --reload
+uvicorn main:app --reload
 ```
 
 The API documentation will be available at: http://localhost:8000/docs
