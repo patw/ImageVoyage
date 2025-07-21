@@ -39,29 +39,35 @@ def similarity(v1, v2):
 
     return {"euclidean": euclidean_distance, "dotProduct": dot_product, "cosine": cosine_similarity}
 
-def get_voyage_embedding(image):
-    # VoyageAI expects a list of [text, image] pairs
-    inputs = [["", image]]
-    result = vo.multimodal_embed(inputs, model="voyage-multimodal-3")
+def get_voyage_image_embedding(image):
+    result = vo.multimodal_embed([[image]], model="voyage-multimodal-3")
+    return result.embeddings[0]
+
+def get_voyage_text_embedding(text):
+    result = vo.multimodal_embed([[text]], model="voyage-multimodal-3")
     return result.embeddings[0]
 
 @app.post("/upload_image_vector")
 async def upload_image_vector(image: UploadFile):
     image = Image.open(image.file)
-    return get_voyage_embedding(image)
+    return get_voyage_image_embedding(image)
+
+@app.post("/text_vector")
+async def url_image_vector(text: str):
+    return get_voyage_text_embedding(text)
 
 @app.post("/url_image_vector")
 async def url_image_vector(image_url: str):
     response = requests.get(image_url)
     image = Image.open(BytesIO(response.content))
-    return get_voyage_embedding(image)
+    return get_voyage_image_embedding(image)
 
 @app.post("/upload_image_image_similarity")
 async def upload_image_image_similarity(image1: UploadFile, image2: UploadFile):
     i1 = Image.open(image1.file)
     i2 = Image.open(image2.file)
-    v1 = get_voyage_embedding(i1)
-    v2 = get_voyage_embedding(i2)
+    v1 = get_voyage_image_embedding(i1)
+    v2 = get_voyage_image_embedding(i2)
     return similarity(v1, v2)
 
 @app.post("/url_image_image_similarity")
@@ -70,6 +76,6 @@ async def url_image_image_similarity(image_url1: str, image_url2: str):
     r2 = requests.get(image_url2)
     i1 = Image.open(BytesIO(r1.content))
     i2 = Image.open(BytesIO(r2.content))
-    v1 = get_voyage_embedding(i1)
-    v2 = get_voyage_embedding(i2)
+    v1 = get_voyage_image_embedding(i1)
+    v2 = get_voyage_image_embedding(i2)
     return similarity(v1, v2)
